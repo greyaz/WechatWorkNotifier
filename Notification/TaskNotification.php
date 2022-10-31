@@ -19,9 +19,9 @@ class TaskNotification extends BaseNotification implements NotificationInterface
 
             $postData["touser"]                                                  = $this->getAudiences($eventData, $assigneeOnly = false);
             $postData["msgtype"]                                                 = "template_card";
-            $postData["agentid"]                                                 = $this->getPlugin()->configs['AGENTID'];
+            $postData["agentid"]                                                 = $this->getConfigs['AGENTID'];
             $postData["template_card"]["card_type"]                              = "text_notice";
-            $postData["template_card"]["source"]["icon_url"]                     = $this->getPlugin()->configs['ICON_URL'];
+            $postData["template_card"]["source"]["icon_url"]                     = $this->getConfigs['ICON_URL'];
             $postData["template_card"]["source"]["desc"]                         = t("Task Management");
             $postData["template_card"]["task_id"]                                = $eventData["task_id"];
             $postData["template_card"]["main_title"]["title"]                    = t("Status updated");

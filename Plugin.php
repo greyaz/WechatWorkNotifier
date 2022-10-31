@@ -8,14 +8,11 @@ use Kanboard\Core\Plugin\Base;
 
 class Plugin extends Base
 {
-    public $configs;
 
     public function initialize()
     {
         if (file_exists('plugins/WechatWorkNotifier/config.php'))
         {
-            require_once('plugins/WechatWorkNotifier/config.php');
-
         $this->projectNotificationTypeModel->setType('WechatWorkTaskNotifier', t('Wechat Work: Send task updates to task members'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\TaskNotification');
         
         $this->projectNotificationTypeModel->setType('WechatWorkAssigneeNotifier', t('Wechat Work: Send a notification to someone who has been assigned'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');

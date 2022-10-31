@@ -3,7 +3,6 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
-use Kanboard\Plugin\WechatWorkNotifier\Plugin;
 
 class BaseNotification extends Base
 {
@@ -62,15 +61,20 @@ class BaseNotification extends Base
     }
 
     protected function getKanboardURL(){
-        $url = $this->getPlugin()->configs["KANBOARD_URL"];
+        $url = $this->getConfigs()["KANBOARD_URL"];
         if (strrpos($url, '/', -1) == strlen($url) - 1){
             $url = substr($url, 0, -1);
         }
         return $url;
     }
     
-    protected function getPlugin(){
-        return Plugin::getInstance($this->container);
+    protected function getConfigs(){
+        if (! session_exists("WWN_CONFIGS")){
+            $configs;
+            require_once('plugins/WechatWorkNotifier/config.php');
+            session_set("WWN_CONFIGS", $configs);
+        }
+        return session_get("WWN_CONFIGS");
     }
 
     private function doSend($token, $jsonTemplate){
@@ -96,17 +100,17 @@ class BaseNotification extends Base
     }
 
     private function getToken($force = false){
-        if (! session_exists("WORK_WEIXIN_TOKEN") || $force){
+        if (! session_exists("WWN_TOKEN") || $force){
             $token = $this->getRemoteToken(
-                $this->getPlugin()->configs["CORPID"],
-                $this->getPlugin()->configs["SECRET"]
+                $this->getConfigs["CORPID"],
+                $this->getConfigs["SECRET"]
             );
 
             if ($token){
-                session_set("WORK_WEIXIN_TOKEN", $token);
+                session_set("WWN_TOKEN", $token);
             }
         }
-        return session_get("WORK_WEIXIN_TOKEN");
+        return session_get("WWN_TOKEN");
     }
 
     private function getRemoteToken($corpid, $secret){
