@@ -17,9 +17,11 @@ class Plugin extends Base
             global $WWN_CONFIGS;
             require_once('plugins/WechatWorkNotifier/config.php');
             
-            $this->projectNotificationTypeModel->setType('WechatWorkMovementNotifier', t('Wechat Work: Notifying task members after task moving.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MovementNotification');
+            $this->projectNotificationTypeModel->setType('WechatWorkMovementNotifier', t('Wechat Work: Notifying task members after moving a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MovementNotification');
         
             $this->projectNotificationTypeModel->setType('WechatWorkAssigneeNotifier', t('Wechat Work: Notifying someone who has been assigned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');
+
+            $this->projectNotificationTypeModel->setType('WechatWorkChangesNotifier', t('Wechat Work: Notifying task members after changing a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\ChangesNotification');
         }
         
     }
