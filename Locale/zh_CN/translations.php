@@ -15,8 +15,16 @@ return array(
     'Kanban' => '所属看板',
     'Creation time' => '创建时间',
     'Task Changed' => '任务有变更',
-    'Changed Content' => '变更内容'
+    'Changed Content' => '变更内容',
     'date_due' => '到期时间',
+    'date_started' => '开始时间',
     'description' => '描述',
     'owner_gp' => '通知组',
+    'owner_ms' => '通知人',
+    'title' => '标题',
+    'priority' => '优先级',
+    'time_estimated' => '预估时间',
+    'time_spent' => '花费时间',
+    'score' => '复杂度',
+    'reference' => '参考',
 );
