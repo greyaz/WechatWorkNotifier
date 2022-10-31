@@ -34,12 +34,12 @@ class CommentNotification extends BaseNotification implements NotificationInterf
             $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["comment"]["name"];
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
-            $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task_id"]."#comment-".$eventData["comment"]["id"];
+            $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task"]["id"]."#comment-".$eventData["comment"]["id"];
             $postData["template_card"]["jump_list"][1]["type"]                   = "1";
             $postData["template_card"]["jump_list"][1]["title"]                  = t("View the kanban");
             $postData["template_card"]["jump_list"][1]["url"]                    = $this->getKanboardURL()."/board/".$eventData["task"]["project_id"];
             $postData["template_card"]["card_action"]["type"]                    = "1";
-            $postData["template_card"]["card_action"]["url"]                     = $this->getKanboardURL()."/task/".$eventData["task_id"]."#comment-".$eventData["comment"]["id"];
+            $postData["template_card"]["card_action"]["url"]                     = $this->getKanboardURL()."/task/".$eventData["task"]["id"]."#comment-".$eventData["comment"]["id"];
             $postData["enable_duplicate_check"]                                  = "1";
             $postData["duplicate_check_interval"]                                = "3";
 
