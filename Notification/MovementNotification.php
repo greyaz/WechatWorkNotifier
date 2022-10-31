@@ -13,10 +13,10 @@ class MovementNotification extends BaseNotification implements NotificationInter
     public function notifyProject(array $project, $eventName, array $eventData)
     {
         // Send task movemens to task members
-        if ($eventName === EVENT_MOVE_PROJECT ||
-            $eventName === EVENT_MOVE_COLUMN ||
-            $eventName === EVENT_MOVE_POSITION ||
-            $eventName === EVENT_MOVE_SWIMLANE
+        if ($eventName === TaskModel::EVENT_MOVE_PROJECT ||
+            $eventName === TaskModel::EVENT_MOVE_COLUMN ||
+            $eventName === TaskModel::EVENT_MOVE_POSITION ||
+            $eventName === TaskModel::EVENT_MOVE_SWIMLANE
         ){
             $postData = array();
 

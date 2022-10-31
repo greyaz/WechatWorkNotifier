@@ -3,6 +3,17 @@ Kanboard通知插件，帮助您通过企业微信接收通知。
 
 A notification plugin for Kanboard, which helps you receive notifications on Wechat Work, aka Wecom.
 
+## Features
+- 在任务移动后，发送通知给任务成员（支持 Group_Assign）。
+
+- 发送通知给被指派的人员。
+
+---
+- Notifying task members after task moving (Supporting Group_Assign).
+
+- Notifying someone who has been assigned.
+
+
 ## Getting started
 1. 直接通过Kanboard插件管理界面安装。或者克隆该仓库至您的插件目录。
 

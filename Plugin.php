@@ -20,8 +20,6 @@ class Plugin extends Base
             $this->projectNotificationTypeModel->setType('WechatWorkMovementNotifier', t('Wechat Work: Notifying task members after task moving.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MovementNotification');
         
             $this->projectNotificationTypeModel->setType('WechatWorkAssigneeNotifier', t('Wechat Work: Notifying someone who has been assigned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');
-
-            $this->projectNotificationTypeModel->setType('WechatWorkMentionNotifier', t('Wechat Work: Notifying someone who has been mentioned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MentionNotification');
         }
         
     }
