@@ -14,5 +14,9 @@ return array(
     'Assignee' => '被指派人',
     'Kanban' => '所属看板',
     'Creation time' => '创建时间',
-    'Task Changed' => '任务有变更'
+    'Task Changed' => '任务有变更',
+    'Changed Content' => '变更内容'
+    'date_due' => '到期时间',
+    'description' => '描述',
+    'owner_gp' => '通知组',
 );
