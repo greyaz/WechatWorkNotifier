@@ -43,7 +43,7 @@ class ChangesNotification extends BaseNotification implements NotificationInterf
                 foreach($eventData["changes"] as $key => $value){
                     $postData["template_card"]["horizontal_content_list"][] = array(
                         "keyname" => t($key),
-                        "value" => strpos($key, "date_") >= 0 ? date("Y-m-d H:i", $value): $value
+                        "value" => gettype(strpos($key, "date_")) == "integer" ? date("Y-m-d H:i", $value): $value
                     );
                 }
             }
