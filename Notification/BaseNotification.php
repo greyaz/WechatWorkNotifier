@@ -69,12 +69,7 @@ class BaseNotification extends Base
     }
     
     protected function getConfigs(){
-        if (! session_exists("WWN_CONFIGS")){
-            $configs;
-            require_once('plugins/WechatWorkNotifier/config.php');
-            session_set("WWN_CONFIGS", $configs);
-        }
-        return session_get("WWN_CONFIGS");
+        return $GLOBALS["$WWN_CONFIGS"];
     }
 
     private function doSend($token, $jsonTemplate){
@@ -102,8 +97,8 @@ class BaseNotification extends Base
     private function getToken($force = false){
         if (! session_exists("WWN_TOKEN") || $force){
             $token = $this->getRemoteToken(
-                $this->getConfigs["CORPID"],
-                $this->getConfigs["SECRET"]
+                $this->getConfigs()["CORPID"],
+                $this->getConfigs()["SECRET"]
             );
 
             if ($token){
