@@ -10,12 +10,16 @@ A notification plugin for Kanboard, which helps you receive notifications on Wec
 
 - 在任务变更后，发送通知给任务成员（支持 Group_Assign）。
 
+- 在评论更新后，发送通知给任务成员（支持 Group_Assign）。
+
 ---
 - Notifying task members after task moving (Supporting Group_Assign).
 
 - Notifying someone who has been assigned.
 
 - Notifying task members after changing a task (Supporting Group_Assign).
+
+- Notifying task members after updating comments (Supporting Group_Assign).
 
 
 ## Getting started
