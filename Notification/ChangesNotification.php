@@ -24,9 +24,9 @@ class ChangesNotification extends BaseNotification implements NotificationInterf
             $postData["template_card"]["source"]["icon_url"]                     = $GLOBALS["WWN_CONFIGS"]['ICON_URL'];
             $postData["template_card"]["source"]["desc"]                         = t("Task Management");
             $postData["template_card"]["task_id"]                                = $eventData["task_id"];
-            $postData["template_card"]["main_title"]["title"]                    = t("Task Changed");
+            $postData["template_card"]["main_title"]["title"]                    = $eventData["task"]["project_name"];
             $postData["template_card"]["main_title"]["desc"]                     = $eventData["task"]["title"];
-            $postData["template_card"]["emphasis_content"]["title"]              = t("Changed Content");
+            $postData["template_card"]["emphasis_content"]["title"]              = t("Task Changed");
             $postData["template_card"]["horizontal_content_list"]                = array();
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
