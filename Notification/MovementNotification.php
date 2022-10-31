@@ -6,25 +6,28 @@ use Kanboard\Plugin\WechatWorkNotifier\Notification\BaseNotification;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
 
-class TaskNotification extends BaseNotification implements NotificationInterface
+class MovementNotification extends BaseNotification implements NotificationInterface
 {
     public function notifyUser(array $user, $eventName, array $eventData){}
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
-        // Send task updates to task members
-        if ($eventName === TaskModel::EVENT_UPDATE)
-        {
+        // Send task movemens to task members
+        if ($eventName === EVENT_MOVE_PROJECT ||
+            $eventName === EVENT_MOVE_COLUMN ||
+            $eventName === EVENT_MOVE_POSITION ||
+            $eventName === EVENT_MOVE_SWIMLANE
+        ){
             $postData = array();
 
-            $postData["touser"]                                                  = $this->getAudiences($eventData, $assigneeOnly = false);
+            $postData["touser"]                                                  = $this->getAudiences($project, $eventData, $assigneeOnly = false);
             $postData["msgtype"]                                                 = "template_card";
-            $postData["agentid"]                                                 = $this->getConfigs()['AGENTID'];
+            $postData["agentid"]                                                 = $GLOBALS["WWN_CONFIGS"]['AGENTID'];
             $postData["template_card"]["card_type"]                              = "text_notice";
-            $postData["template_card"]["source"]["icon_url"]                     = $this->getConfigs()['ICON_URL'];
+            $postData["template_card"]["source"]["icon_url"]                     = $GLOBALS["WWN_CONFIGS"]['ICON_URL'];
             $postData["template_card"]["source"]["desc"]                         = t("Task Management");
             $postData["template_card"]["task_id"]                                = $eventData["task_id"];
-            $postData["template_card"]["main_title"]["title"]                    = t("Status updated");
+            $postData["template_card"]["main_title"]["title"]                    = t("Progress updated");
             $postData["template_card"]["main_title"]["desc"]                     = $eventData["task"]["title"];
             $postData["template_card"]["emphasis_content"]["title"]              = $eventData["task"]["column_title"];
             $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Assignee");

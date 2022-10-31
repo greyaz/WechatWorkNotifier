@@ -20,7 +20,7 @@ class BaseNotification extends Base
         return $result;
     }
 
-    protected function getAudiences($eventData, $assigneeOnly = false){
+    protected function getAudiences($project, $eventData, $assigneeOnly = false){
         $audiences = array();
 
         $owner = $this->userModel->getById($eventData["task"]["owner_id"]);
@@ -31,6 +31,12 @@ class BaseNotification extends Base
         
         if (!$assigneeOnly)
         {
+            $projectOwner = $this->userModel->getById($project["owner_id"]);
+            if (!empty($projectOwner) && !empty($projectOwner['email']))
+            {
+                $audiences[] = $projectOwner['email'];
+            }
+
             $creator = $this->userModel->getById($eventData["task"]["creator_id"]);
             if (!empty($creator) && !empty($creator['email'])) {
                 $audiences[] = $creator['email'];
@@ -61,15 +67,11 @@ class BaseNotification extends Base
     }
 
     protected function getKanboardURL(){
-        $url = $this->getConfigs()["KANBOARD_URL"];
+        $url = $GLOBALS["WWN_CONFIGS"]["KANBOARD_URL"];
         if (strrpos($url, '/', -1) == strlen($url) - 1){
             $url = substr($url, 0, -1);
         }
         return $url;
-    }
-    
-    protected function getConfigs(){
-        return $GLOBALS["$WWN_CONFIGS"];
     }
 
     private function doSend($token, $jsonTemplate){
@@ -97,8 +99,8 @@ class BaseNotification extends Base
     private function getToken($force = false){
         if (! session_exists("WWN_TOKEN") || $force){
             $token = $this->getRemoteToken(
-                $this->getConfigs()["CORPID"],
-                $this->getConfigs()["SECRET"]
+                $GLOBALS["WWN_CONFIGS"]["CORPID"],
+                $GLOBALS["WWN_CONFIGS"]["SECRET"]
             );
 
             if ($token){

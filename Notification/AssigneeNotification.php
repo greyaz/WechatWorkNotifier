@@ -17,11 +17,11 @@ class AssigneeNotification extends BaseNotification implements NotificationInter
         {
             $postData = array();
 
-            $postData["touser"]                                                  = $this->getAudiences($eventData, $assigneeOnly = true);
+            $postData["touser"]                                                  = $this->getAudiences($project, $eventData, $assigneeOnly = true);
             $postData["msgtype"]                                                 = "template_card";
-            $postData["agentid"]                                                 = $this->getConfigs()['AGENTID'];
+            $postData["agentid"]                                                 = $GLOBALS["WWN_CONFIGS"]['AGENTID'];
             $postData["template_card"]["card_type"]                              = "text_notice";
-            $postData["template_card"]["source"]["icon_url"]                     = $this->getConfigs()['ICON_URL'];
+            $postData["template_card"]["source"]["icon_url"]                     = $GLOBALS["WWN_CONFIGS"]['ICON_URL'];
             $postData["template_card"]["source"]["desc"]                         = t("Task Management");
             $postData["template_card"]["task_id"]                                = $eventData["task_id"];
             $postData["template_card"]["main_title"]["title"]                    = t("You have a new task");
