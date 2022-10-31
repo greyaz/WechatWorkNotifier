@@ -1,14 +1,14 @@
 <?php
 
-namespace Kanboard\Plugin\WechatWork\Notification;
+namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
-use Kanboard\Plugin\WechatWork\Notification\BaseNotification;
+use Kanboard\Plugin\WechatWorkNotifier\Notification\BaseNotification;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
 
 class AssigneeNotification extends BaseNotification implements NotificationInterface
 {
-    public function notifyUser(array $user, $eventName, array $eventData)
+    public function notifyUser(array $user, $eventName, array $eventData){}
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {

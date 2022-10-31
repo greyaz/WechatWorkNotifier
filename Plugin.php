@@ -1,6 +1,6 @@
 <?php
 
-namespace Kanboard\Plugin\WechatWork;
+namespace Kanboard\Plugin\WechatWorkNotifier;
 
 use Kanboard\Core\Translator;
 use Kanboard\Core\Plugin\Base;
@@ -12,9 +12,15 @@ class Plugin extends Base
 
     public function initialize()
     {
-        require_once('plugins/WechatWork/config.php');
-        $this->projectNotificationTypeModel->setType('WechatWorkTask', t('Wechat Work: Send task updates to task members'), '\Kanboard\Plugin\WechatWork\Notification\TaskNotification');
-        $this->projectNotificationTypeModel->setType('WechatWorkAssignee', t('Wechat Work: Send a notification to someone who has been assigned'), '\Kanboard\Plugin\WechatWork\Notification\AssigneeNotification');
+        if (file_exists('plugins/WechatWorkNotifier/config.php'))
+        {
+            require_once('plugins/WechatWorkNotifier/config.php');
+
+        $this->projectNotificationTypeModel->setType('WechatWorkTaskNotifier', t('Wechat Work: Send task updates to task members'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\TaskNotification');
+        
+        $this->projectNotificationTypeModel->setType('WechatWorkAssigneeNotifier', t('Wechat Work: Send a notification to someone who has been assigned'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');
+        }
+        
     }
     public function onStartup()
     {
@@ -38,7 +44,7 @@ class Plugin extends Base
 
     public function getPluginHomepage()
     {
-        return 'https://github.com/greyaz/Wechat-Work-Notifier';
+        return 'https://github.com/greyaz/WechatWorkNotifier';
     }
 
     public function getCompatibleVersion()

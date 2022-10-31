@@ -1,13 +1,13 @@
 <?php
 
-namespace Kanboard\Plugin\WechatWork\Notification;
+namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
-use Kanboard\Plugin\WechatWork\Plugin;
+use Kanboard\Plugin\WechatWorkNotifier\Plugin;
 
 class BaseNotification extends Base
 {
-    private function sendMessage($jsonTemplate)
+    protected function sendMessage($jsonTemplate)
     {
         $result = false;
 
@@ -19,6 +19,58 @@ class BaseNotification extends Base
             $result = $this->doSend($this->getToken(true), $jsonTemplate);
         }
         return $result;
+    }
+
+    protected function getAudiences($eventData, $assigneeOnly = false){
+        $audiences = array();
+
+        $owner = $this->userModel->getById($eventData["task"]["owner_id"]);
+        if (!empty($owner) && !empty($owner['email']))
+        {
+            $audiences[] = $owner['email'];
+        }
+        
+        if (!$assigneeOnly)
+        {
+            $creator = $this->userModel->getById($eventData["task"]["creator_id"]);
+            if (!empty($creator) && !empty($creator['email'])) {
+                $audiences[] = $creator['email'];
+            }
+
+            $multimembers = $this->multiselectMemberModel->getMembers($eventData["task"]['owner_ms']);
+            if (!empty($multimembers)){
+                foreach ($multimembers as $member) {
+                    $user = $this->userModel->getById($member['id']);
+                    if (!empty($user['email'])) {
+                        $audiences[] = $user['email'];
+                    }
+                }
+            }
+            
+            $groupmembers = $this->groupMemberModel->getMembers($eventData["task"]['owner_gp']);
+            if (!empty($groupmembers)){
+                foreach ($groupmembers as $member) {
+                    $user = $this->userModel->getById($member['id']);
+                    if (!empty($user['email'])) {
+                        $audiences[] = $user['email'];
+                    }
+                }
+            }
+        }
+
+        return implode("|", array_unique($audiences));
+    }
+
+    protected function getKanboardURL(){
+        $url = $this->getPlugin()->configs["KANBOARD_URL"];
+        if (strrpos($url, '/', -1) == strlen($url) - 1){
+            $url = substr($url, 0, -1);
+        }
+        return $url;
+    }
+    
+    protected function getPlugin(){
+        return Plugin::getInstance($this->container);
     }
 
     private function doSend($token, $jsonTemplate){
@@ -68,57 +120,5 @@ class BaseNotification extends Base
             $this->logger->debug(serialize($error));
         }
         return "";
-    }
-
-    private function getAudiences($eventData, $assigneeOnly = false){
-        $audiences = array();
-
-        $owner = $this->userModel->getById($eventData["task"]["owner_id"]);
-        if (!empty($owner) && !empty($owner['email']))
-        {
-            $audiences[] = $owner['email'];
-        }
-        
-        if (!$assigneeOnly)
-        {
-            $creator = $this->userModel->getById($eventData["task"]["creator_id"]);
-            if (!empty($creator) && !empty($creator['email'])) {
-                $audiences[] = $creator['email'];
-            }
-
-            $multimembers = $this->multiselectMemberModel->getMembers($eventData["task"]['owner_ms']);
-            if (!empty($multimembers)){
-                foreach ($multimembers as $member) {
-                    $user = $this->userModel->getById($member['id']);
-                    if (!empty($user['email'])) {
-                        $audiences[] = $user['email'];
-                    }
-                }
-            }
-            
-            $groupmembers = $this->groupMemberModel->getMembers($eventData["task"]['owner_gp']);
-            if (!empty($groupmembers)){
-                foreach ($groupmembers as $member) {
-                    $user = $this->userModel->getById($member['id']);
-                    if (!empty($user['email'])) {
-                        $audiences[] = $user['email'];
-                    }
-                }
-            }
-        }
-
-        return implode("|", array_unique($audiences));
-    }
-
-    private function getKanboardURL(){
-        $url = $this->getPlugin()->configs["KANBOARD_URL"];
-        if (strrpos($url, '/', -1) == strlen($a) - 1){
-            $url = substr($url, 0, -1);
-        }
-        return $url;
-    }
-    
-    private function getPlugin(){
-        return Plugin::getInstance($this->container);
     }
 }
