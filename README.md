@@ -34,9 +34,9 @@ A notification plugin for [Kanboard](https://github.com/kanboard/kanboard), whic
 
 ## Caution
 ⚠️
+
 请确保Kanboard用户的邮件地址和他们在企业微信中邮件地址相同。
 
-⚠️
 Ensure that the email addresses of the users in your Kanboard are exactly the same as those on their Wechat Work. 
 
 ## Author
