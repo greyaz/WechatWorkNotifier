@@ -31,7 +31,7 @@ class CommentNotification extends BaseNotification implements NotificationInterf
             $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Comment");
             $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["comment"]["comment"];
             $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Commentator");
-            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["comment"]["name"];
+            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["comment"]["username"];
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
             $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task"]["id"]."#comment-".$eventData["comment"]["id"];

@@ -30,7 +30,7 @@ class CreationNotification extends BaseNotification implements NotificationInter
             $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Description");
             $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["task"]["description"];
             $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Creator");
-            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["creator_name"];
+            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["creator_username"];
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
             $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task_id"];

@@ -31,14 +31,14 @@ class UserMentionNotification extends BaseNotification implements NotificationIn
                 $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Comment");
                 $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["comment"]["comment"];
                 $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Commentator");
-                $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["comment"]["name"];
+                $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["comment"]["username"];
             }
             else
             {
                 $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Description");
                 $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["task"]["description"];
                 $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Creator");
-                $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["creator_name"];
+                $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["creator_username"];
             }
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
