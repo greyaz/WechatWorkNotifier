@@ -1,10 +1,12 @@
 <?php
 
 return array(
-    'Wechat Work: Notifying task members after moving a task.' => '企业微信：在任务移动后，发送通知给任务成员。',
-    'Wechat Work: Notifying someone who has been assigned.' => '企业微信：发送通知给被指派的人员。',
-    'Wechat Work: Notifying task members after changing a task.' => '企业微信：在任务变更后，发送通知给任务成员。',
-    'Wechat Work: Notifying task members after updating comments.' => '企业微信：在评论更新后，发送通知给任务成员。',
+    'Wechat Work: Notifying me after being mentioned.' => '企业微信：在被@后通知我。',
+    'Wechat Work: Notifying task members after creation.' => '企业微信：创建任务后，发送通知给任务成员。',
+    'Wechat Work: Notifying someone who has been assigned.' => '企业微信：发送通知给被指派的项目成员。',
+    'Wechat Work: Notifying members after moving a task.' => '企业微信：在任务移动后，发送通知给任务成员。',
+    'Wechat Work: Notifying members after changing a task.' => '企业微信：在任务变更后，发送通知给任务成员。',
+    'Wechat Work: Notifying members after updating comments.' => '企业微信：在评论更新后，发送通知给任务成员。',
     'Task Management' => '任务管理',
     'You have a new task' => '您有一个新任务',
     'Start time' => '开始时间',
@@ -14,7 +16,6 @@ return array(
     'Progress updated' => '进度已更新',
     'Assignee' => '被指派人',
     'Kanban' => '所属看板',
-    'Creation time' => '创建时间',
     'Task Changed' => '任务有变更',
     'date_due' => '到期时间',
     'date_started' => '开始时间',
@@ -30,4 +31,8 @@ return array(
     'Comments Updated' => '评论有更新',
     'Comment' => '评论内容',
     'Commentator' => '评论用户',
+    "@ You" => '@了你',
+    'Description' => '任务描述',
+    'Creator' => '任务作者',
+    'New Task' => '新任务',
 );

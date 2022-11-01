@@ -34,8 +34,6 @@ class MovementNotification extends BaseNotification implements NotificationInter
             $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["task"]["assignee_username"];
             $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Kanban");
             $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["project_name"];
-            $postData["template_card"]["horizontal_content_list"][2]["keyname"]  = t("Creation time");
-            $postData["template_card"]["horizontal_content_list"][2]["value"]    = date("Y-m-d H:i", $eventData["task"]["date_creation"]);
             $postData["template_card"]["jump_list"][0]["type"]                   = "1";
             $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
             $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task_id"];

@@ -11,19 +11,26 @@ class Plugin extends Base
 
     public function initialize()
     {
-
         if (file_exists('plugins/WechatWorkNotifier/config.php'))
         {
             global $WWN_CONFIGS;
             require_once('plugins/WechatWorkNotifier/config.php');
-            
-            $this->projectNotificationTypeModel->setType('WechatWorkMovementNotifier', t('Wechat Work: Notifying task members after moving a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MovementNotification');
-        
-            $this->projectNotificationTypeModel->setType('WechatWorkAssigneeNotifier', t('Wechat Work: Notifying someone who has been assigned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');
 
-            $this->projectNotificationTypeModel->setType('WechatWorkChangesNotifier', t('Wechat Work: Notifying task members after changing a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\ChangesNotification');
+            Translator::load($this->languageModel->getCurrentLanguage(), __DIR__.'/Locale');
 
-            $this->projectNotificationTypeModel->setType('WechatWorkCommentNotifier', t('Wechat Work: Notifying task members after updating comments.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\CommentNotification');
+            $this->userNotificationTypeModel->setType('WWN_UserMentionNotifier', t('Wechat Work: Notifying me after being mentioned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\UserMentionNotifier');
+
+            $this->projectNotificationTypeModel->setType('WWN_CreationNotifier', t('Wechat Work: Notifying task members after creation.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\CreationNotification');
+
+            $this->projectNotificationTypeModel->setType('WWN_AssigneeNotifier', t('Wechat Work: Notifying someone who has been assigned.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\AssigneeNotification');
+
+            $this->projectNotificationTypeModel->setType('WWN_MovementNotifier', t('Wechat Work: Notifying members after moving a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\MovementNotification');
+
+            $this->projectNotificationTypeModel->setType('WWN_ChangesNotifier', t('Wechat Work: Notifying members after changing a task.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\ChangesNotification');
+
+            $this->projectNotificationTypeModel->setType('WWN_CommentNotifier', t('Wechat Work: Notifying members after updating comments.'), '\Kanboard\Plugin\WechatWorkNotifier\Notification\CommentNotification');
+
+            Translator::unload();
         }
         
     }
@@ -44,7 +51,7 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '0.1.0';
+        return '0.2.0';
     }
 
     public function getPluginHomepage()
