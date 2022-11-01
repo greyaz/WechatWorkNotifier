@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Plugin\WechatWorkNotifier\Notification\BaseNotification;
+use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
 
@@ -18,34 +19,20 @@ class MovementNotification extends BaseNotification implements NotificationInter
             $eventName === TaskModel::EVENT_MOVE_POSITION ||
             $eventName === TaskModel::EVENT_MOVE_SWIMLANE
         ){
-            $postData = array();
-
-            $postData["touser"]                                                  = $this->getAudiences($project, $eventData, $assigneeOnly = false);
-            $postData["msgtype"]                                                 = "template_card";
-            $postData["agentid"]                                                 = $GLOBALS["WWN_CONFIGS"]['AGENTID'];
-            $postData["template_card"]["card_type"]                              = "text_notice";
-            $postData["template_card"]["source"]["icon_url"]                     = $GLOBALS["WWN_CONFIGS"]['ICON_URL'];
-            $postData["template_card"]["source"]["desc"]                         = t("Task Management");
-            $postData["template_card"]["task_id"]                                = $eventData["task_id"];
-            $postData["template_card"]["main_title"]["title"]                    = t("Progress updated");
-            $postData["template_card"]["main_title"]["desc"]                     = $eventData["task"]["title"];
-            $postData["template_card"]["emphasis_content"]["title"]              = $eventData["task"]["column_title"];
-            $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Assignee");
-            $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["task"]["assignee_username"];
-            $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Kanban");
-            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["project_name"];
-            $postData["template_card"]["jump_list"][0]["type"]                   = "1";
-            $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
-            $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task_id"];
-            $postData["template_card"]["jump_list"][1]["type"]                   = "1";
-            $postData["template_card"]["jump_list"][1]["title"]                  = t("View the kanban");
-            $postData["template_card"]["jump_list"][1]["url"]                    = $this->getKanboardURL()."/board/".$eventData["task"]["project_id"];
-            $postData["template_card"]["card_action"]["type"]                    = "1";
-            $postData["template_card"]["card_action"]["url"]                     = $this->getKanboardURL()."/task/".$eventData["task_id"];
-            $postData["enable_duplicate_check"]                                  = "1";
-            $postData["duplicate_check_interval"]                                = "3";
-
-            $this->sendMessage($postData);
+            $this->sendMessage(MessageModel::create(
+                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
+                $taskId         = $eventData["task"]["id"], 
+                $title          = $eventData["task"]["project_name"], 
+                $subTitle       = $eventData["task"]["title"], 
+                $key            = $eventData["task"]["column_title"], 
+                $desc           = t("Progress updated"), 
+                $quote          = null, 
+                $contentList    = array{
+                    t("Assignee") => $eventData["task"]["assignee_username"]
+                }, 
+                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
+                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
+            ));
         }
     }
 }

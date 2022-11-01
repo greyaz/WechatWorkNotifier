@@ -18,12 +18,12 @@ A notification plugin for [Kanboard](https://github.com/kanboard/kanboard), whic
 - 支持Group_Assign插件。 Supporting the plugin Group_Assign.
 
 ## Getting started
-1. 直接通过Kanboard插件管理界面安装。或者克隆该仓库至您的插件目录。
+1. 直接通过Kanboard插件管理界面安装。
 
 2. 复制并重命名文件 `config-default.php` 为 `config.php`，然后根据注释中的说明进行编辑。
 
 ---
-1. Install from the Kanboard plugin manager directly. Or clone this repository to your plugin folder.
+1. Install from the Kanboard plugin manager directly.
 
 2. Copy and rename the file `config-default.php` to `config.php`, then edit it by following the instructions in the comments.
 

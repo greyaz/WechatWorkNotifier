@@ -29,10 +29,7 @@ return array(
     'score' => '复杂度',
     'reference' => '任务参考',
     'Comments Updated' => '评论有更新',
-    'Comment' => '评论内容',
-    'Commentator' => '评论用户',
-    '@ You' => '@了你',
-    'Description' => '任务描述',
     'Creator' => '任务作者',
     'New Task' => '新任务',
+    '@ You' => '@了你',
 );

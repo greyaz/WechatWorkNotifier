@@ -66,7 +66,19 @@ class BaseNotification extends Base
         return implode("|", array_unique($audiences));
     }
 
-    protected function getKanboardURL(){
+    protected function getTaskLink($taskId, $commentId = null){
+        $taskLink = $this->getKanboardURL()."/task/".$taskId;
+        if (!empty($commentId)){
+            $taskLink .= "#comment-".$commentId;
+        }
+        return $taskLink;
+    }
+
+    protected function getProjectLink($projectId){
+        return $this->getKanboardURL()."/board/".$projectId;
+    }
+
+    private function getKanboardURL(){
         $url = $GLOBALS["WWN_CONFIGS"]["KANBOARD_URL"];
         if (strrpos($url, '/', -1) == strlen($url) - 1){
             $url = substr($url, 0, -1);

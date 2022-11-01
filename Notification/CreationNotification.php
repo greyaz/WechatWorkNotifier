@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Plugin\WechatWorkNotifier\Notification\BaseNotification;
+use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
 
@@ -15,34 +16,20 @@ class CreationNotification extends BaseNotification implements NotificationInter
         // Send to task members after creation.
         if ($eventName === TaskModel::EVENT_CREATE
         ){
-            $postData = array();
-
-            $postData["touser"]                                                  = $this->getAudiences($project, $eventData, $assigneeOnly = false);
-            $postData["msgtype"]                                                 = "template_card";
-            $postData["agentid"]                                                 = $GLOBALS["WWN_CONFIGS"]['AGENTID'];
-            $postData["template_card"]["card_type"]                              = "text_notice";
-            $postData["template_card"]["source"]["icon_url"]                     = $GLOBALS["WWN_CONFIGS"]['ICON_URL'];
-            $postData["template_card"]["source"]["desc"]                         = t("Task Management");
-            $postData["template_card"]["task_id"]                                = $eventData["task_id"];
-            $postData["template_card"]["main_title"]["title"]                    = $eventData["task"]["project_name"];
-            $postData["template_card"]["main_title"]["desc"]                     = $eventData["task"]["title"];
-            $postData["template_card"]["emphasis_content"]["title"]              = t("New Task");
-            $postData["template_card"]["horizontal_content_list"][0]["keyname"]  = t("Description");
-            $postData["template_card"]["horizontal_content_list"][0]["value"]    = $eventData["task"]["description"];
-            $postData["template_card"]["horizontal_content_list"][1]["keyname"]  = t("Creator");
-            $postData["template_card"]["horizontal_content_list"][1]["value"]    = $eventData["task"]["creator_username"];
-            $postData["template_card"]["jump_list"][0]["type"]                   = "1";
-            $postData["template_card"]["jump_list"][0]["title"]                  = t("View the task");
-            $postData["template_card"]["jump_list"][0]["url"]                    = $this->getKanboardURL()."/task/".$eventData["task_id"];
-            $postData["template_card"]["jump_list"][1]["type"]                   = "1";
-            $postData["template_card"]["jump_list"][1]["title"]                  = t("View the kanban");
-            $postData["template_card"]["jump_list"][1]["url"]                    = $this->getKanboardURL()."/board/".$eventData["task"]["project_id"];
-            $postData["template_card"]["card_action"]["type"]                    = "1";
-            $postData["template_card"]["card_action"]["url"]                     = $this->getKanboardURL()."/task/".$eventData["task_id"];
-            $postData["enable_duplicate_check"]                                  = "1";
-            $postData["duplicate_check_interval"]                                = "3";
-
-            $this->sendMessage($postData);
+            $this->sendMessage(MessageModel::create(
+                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
+                $taskId         = $eventData["task"]["id"], 
+                $title          = $eventData["task"]["project_name"], 
+                $subTitle       = $eventData["task"]["title"], 
+                $key            = t("New Task"), 
+                $desc           = null, 
+                $quote          = $eventData["task"]["description"], 
+                $contentList    = array{
+                    t("Creator") => $eventData["task"]["creator_username"]
+                }, 
+                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
+                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
+            ));
         }
     }
 }
