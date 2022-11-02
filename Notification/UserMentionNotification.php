@@ -2,13 +2,13 @@
 
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
-use Kanboard\Plugin\WechatWorkNotifier\Notification\BaseNotification;
+use Kanboard\Core\Base;
 use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\CommentModel;
 use Kanboard\Model\TaskModel;
 
-class UserMentionNotification extends BaseNotification implements NotificationInterface
+class UserMentionNotification extends Base implements NotificationInterface
 {
     public function notifyUser(array $user, $eventName, array $eventData){
         // Send to the user who has been mentioned
