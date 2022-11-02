@@ -31,5 +31,6 @@ return array(
     'Comments Updated' => '评论有更新',
     'Creator' => '任务作者',
     'New Task' => '新任务',
+    'Description' => '任务描述',
     '@ You' => '@了你',
 );

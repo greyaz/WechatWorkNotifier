@@ -33,6 +33,7 @@ class ChangesNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("Task Changed"), 
                     $desc           = null, 
+                    $quoteTitle     = null, 
                     $quote          = null, 
                     $contentList    = $changes, 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 

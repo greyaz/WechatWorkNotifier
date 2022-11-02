@@ -26,6 +26,7 @@ class AssigneeNotification extends Base implements NotificationInterface
                     $subTitle       = null, 
                     $key            = "P".$eventData["task"]["priority"], 
                     $desc           = $eventData["task"]["title"], 
+                    $quoteTitle     = null, 
                     $quote          = null, 
                     $contentList    = array(
                         t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),

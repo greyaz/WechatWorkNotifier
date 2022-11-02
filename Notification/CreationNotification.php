@@ -26,6 +26,7 @@ class CreationNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("New Task"), 
                     $desc           = null, 
+                    $quoteTitle     = t("Description"), 
                     $quote          = $eventData["task"]["description"], 
                     $contentList    = array(
                         t("Creator") => $eventData["task"]["creator_username"]

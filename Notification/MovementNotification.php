@@ -29,6 +29,7 @@ class MovementNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = $eventData["task"]["column_title"], 
                     $desc           = t("Progress updated"), 
+                    $quoteTitle     = null, 
                     $quote          = null, 
                     $contentList    = array(
                         t("Assignee") => $eventData["task"]["assignee_username"]
