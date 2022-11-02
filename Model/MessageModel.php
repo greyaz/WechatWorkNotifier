@@ -4,7 +4,7 @@ namespace Kanboard\Plugin\WechatWorkNotifier\Model;
 
 class MessageModel
 {
-    public static function create($taskId, $title, $subTitle, $key, $desc, $quote, array $contentList, $taskLink, $projectLink){
+    public static function create($taskId, $title, $subTitle, $key, $desc, $quote, $contentList, $taskLink, $projectLink){
         $message = array();
 
         $message["msgtype"]                                                 = "template_card";
