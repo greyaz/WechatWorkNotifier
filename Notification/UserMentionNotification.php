@@ -26,9 +26,9 @@ class UserMentionNotification extends Base implements NotificationInterface
                     $key            = t("@ You"), 
                     $desc           = null, 
                     $quote          = isset($eventData["comment"]) ? $eventData["comment"]["username"].": ".$eventData["comment"]["comment"] : $eventData["task"]["description"], 
-                    $contentList    = isset($eventData["comment"]) ? null : array{
+                    $contentList    = isset($eventData["comment"]) ? null : array(
                         t("Creator") => $eventData["task"]["creator_username"]
-                    }, 
+                    ), 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
                 )

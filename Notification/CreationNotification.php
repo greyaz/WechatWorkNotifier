@@ -27,9 +27,9 @@ class CreationNotification extends Base implements NotificationInterface
                     $key            = t("New Task"), 
                     $desc           = null, 
                     $quote          = $eventData["task"]["description"], 
-                    $contentList    = array{
+                    $contentList    = array(
                         t("Creator") => $eventData["task"]["creator_username"]
-                    }, 
+                    ), 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
                 )

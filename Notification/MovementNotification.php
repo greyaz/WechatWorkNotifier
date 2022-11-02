@@ -30,9 +30,9 @@ class MovementNotification extends Base implements NotificationInterface
                     $key            = $eventData["task"]["column_title"], 
                     $desc           = t("Progress updated"), 
                     $quote          = null, 
-                    $contentList    = array{
+                    $contentList    = array(
                         t("Assignee") => $eventData["task"]["assignee_username"]
-                    }, 
+                    ), 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
                 )
