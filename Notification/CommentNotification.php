@@ -27,7 +27,7 @@ class CommentNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("Comments Updated"), 
                     $desc           = null, 
-                    $quote          = $eventData["comment"]["username"].": ".$eventData["comment"]["comment"], 
+                    $quote          = "<b>".$eventData["comment"]["username"].": </b>".$eventData["comment"]["comment"], 
                     $contentList    = null, 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])

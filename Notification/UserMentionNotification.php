@@ -25,7 +25,7 @@ class UserMentionNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("@ You"), 
                     $desc           = null, 
-                    $quote          = isset($eventData["comment"]) ? $eventData["comment"]["username"].": ".$eventData["comment"]["comment"] : $eventData["task"]["description"], 
+                    $quote          = isset($eventData["comment"]) ? "<b>".$eventData["comment"]["username"].": </b>".$eventData["comment"]["comment"] : $eventData["task"]["description"], 
                     $contentList    = isset($eventData["comment"]) ? null : array(
                         t("Creator") => $eventData["task"]["creator_username"]
                     ), 
