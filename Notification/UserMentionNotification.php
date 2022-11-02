@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
+use Kanboard\Core\Translator;
 use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\CommentModel;
@@ -15,6 +16,8 @@ class UserMentionNotification extends Base implements NotificationInterface
         if ($eventName === CommentModel::EVENT_USER_MENTION ||
             $eventName === TaskModel::EVENT_USER_MENTION
         ){
+            // fix the translations unloading bug
+            Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
             $this->helper->message->send
             (
                 $audiences  = $eventData["mention"]["email"],

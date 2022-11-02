@@ -16,7 +16,7 @@ class Plugin extends Base
 
     public function onStartup()
     {
-        Translator::load($this->languageModel->getCurrentLanguage(), __DIR__.'/Locale');
+        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
 
         if (file_exists('plugins/WechatWorkNotifier/config.php'))
         {
