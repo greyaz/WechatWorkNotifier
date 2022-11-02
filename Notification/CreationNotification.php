@@ -16,20 +16,24 @@ class CreationNotification extends BaseNotification implements NotificationInter
         // Send to task members after creation.
         if ($eventName === TaskModel::EVENT_CREATE
         ){
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = $eventData["task"]["project_name"], 
-                $subTitle       = $eventData["task"]["title"], 
-                $key            = t("New Task"), 
-                $desc           = null, 
-                $quote          = $eventData["task"]["description"], 
-                $contentList    = array{
-                    t("Creator") => $eventData["task"]["creator_username"]
-                }, 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = false),
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = $eventData["task"]["project_name"], 
+                    $subTitle       = $eventData["task"]["title"], 
+                    $key            = t("New Task"), 
+                    $desc           = null, 
+                    $quote          = $eventData["task"]["description"], 
+                    $contentList    = array{
+                        t("Creator") => $eventData["task"]["creator_username"]
+                    }, 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 }

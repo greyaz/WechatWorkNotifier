@@ -15,20 +15,24 @@ class UserMentionNotification extends BaseNotification implements NotificationIn
         if ($eventName === CommentModel::EVENT_USER_MENTION ||
             $eventName === TaskModel::EVENT_USER_MENTION
         ){
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = $eventData["task"]["project_name"], 
-                $subTitle       = $eventData["task"]["title"], 
-                $key            = t("@ You"), 
-                $desc           = null, 
-                $quote          = isset($eventData["comment"]) ? $eventData["comment"]["username"].": ".$eventData["comment"]["comment"] : $eventData["task"]["description"], 
-                $contentList    = isset($eventData["comment"]) ? null : array{
-                    t("Creator") => $eventData["task"]["creator_username"]
-                }, 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $eventData["mention"]["email"],
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = $eventData["task"]["project_name"], 
+                    $subTitle       = $eventData["task"]["title"], 
+                    $key            = t("@ You"), 
+                    $desc           = null, 
+                    $quote          = isset($eventData["comment"]) ? $eventData["comment"]["username"].": ".$eventData["comment"]["comment"] : $eventData["task"]["description"], 
+                    $contentList    = isset($eventData["comment"]) ? null : array{
+                        t("Creator") => $eventData["task"]["creator_username"]
+                    }, 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 

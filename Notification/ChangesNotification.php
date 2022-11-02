@@ -23,18 +23,22 @@ class ChangesNotification extends BaseNotification implements NotificationInterf
                 }
             }
 
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = $eventData["task"]["project_name"], 
-                $subTitle       = $eventData["task"]["title"], 
-                $key            = t("Task Changed"), 
-                $desc           = null, 
-                $quote          = null, 
-                $contentList    = $changes, 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = false),
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = $eventData["task"]["project_name"], 
+                    $subTitle       = $eventData["task"]["title"], 
+                    $key            = t("Task Changed"), 
+                    $desc           = null, 
+                    $quote          = null, 
+                    $contentList    = $changes, 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 }

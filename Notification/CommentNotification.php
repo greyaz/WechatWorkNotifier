@@ -17,18 +17,22 @@ class CommentNotification extends BaseNotification implements NotificationInterf
         if ($eventName === CommentModel::EVENT_UPDATE ||                                                                           
             $eventName === CommentModel::EVENT_CREATE
         ){
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = $eventData["task"]["project_name"], 
-                $subTitle       = $eventData["task"]["title"], 
-                $key            = t("Comments Updated"), 
-                $desc           = null, 
-                $quote          = $eventData["comment"]["username"].": ".$eventData["comment"]["comment"], 
-                $contentList    = null, 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = false),
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = $eventData["task"]["project_name"], 
+                    $subTitle       = $eventData["task"]["title"], 
+                    $key            = t("Comments Updated"), 
+                    $desc           = null, 
+                    $quote          = $eventData["comment"]["username"].": ".$eventData["comment"]["comment"], 
+                    $contentList    = null, 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"], $eventData["comment"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 }

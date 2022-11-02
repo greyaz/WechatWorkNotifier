@@ -19,20 +19,24 @@ class MovementNotification extends BaseNotification implements NotificationInter
             $eventName === TaskModel::EVENT_MOVE_POSITION ||
             $eventName === TaskModel::EVENT_MOVE_SWIMLANE
         ){
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = false),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = $eventData["task"]["project_name"], 
-                $subTitle       = $eventData["task"]["title"], 
-                $key            = $eventData["task"]["column_title"], 
-                $desc           = t("Progress updated"), 
-                $quote          = null, 
-                $contentList    = array{
-                    t("Assignee") => $eventData["task"]["assignee_username"]
-                }, 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = false),
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = $eventData["task"]["project_name"], 
+                    $subTitle       = $eventData["task"]["title"], 
+                    $key            = $eventData["task"]["column_title"], 
+                    $desc           = t("Progress updated"), 
+                    $quote          = null, 
+                    $contentList    = array{
+                        t("Assignee") => $eventData["task"]["assignee_username"]
+                    }, 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 }

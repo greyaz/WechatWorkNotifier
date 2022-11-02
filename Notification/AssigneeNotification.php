@@ -16,21 +16,25 @@ class AssigneeNotification extends BaseNotification implements NotificationInter
         // Send a notification to someone who has been assigned
         if ($eventName === TaskModel::EVENT_ASSIGNEE_CHANGE)
         {
-            $this->sendMessage(MessageModel::create(
-                $audiences      = $this->getAudiences($project, $eventData, $assigneeOnly = true),
-                $taskId         = $eventData["task"]["id"], 
-                $title          = t("You have a new task"), 
-                $subTitle       = null, 
-                $key            = "P".$eventData["task"]["priority"], 
-                $desc           = $eventData["task"]["title"], 
-                $quote          = null, 
-                $contentList    = array(
-                    t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
-                    t("Due time") => date("Y-m-d H:i", $eventData["task"]["date_due"])
-                ), 
-                $taskLink       = $this->getTaskLink($eventData["task"]["id"]), 
-                $projectLink    = $this->getProjectLink($eventData["task"]["project_id"])
-            ));
+            $this->helper->message->send
+            (
+                $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = true),
+                $message    = MessageModel::create
+                (
+                    $taskId         = $eventData["task"]["id"], 
+                    $title          = t("You have a new task"), 
+                    $subTitle       = null, 
+                    $key            = "P".$eventData["task"]["priority"], 
+                    $desc           = $eventData["task"]["title"], 
+                    $quote          = null, 
+                    $contentList    = array(
+                        t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
+                        t("Due time") => date("Y-m-d H:i", $eventData["task"]["date_due"])
+                    ), 
+                    $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
+                    $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
+                )
+            );
         }
     }
 }

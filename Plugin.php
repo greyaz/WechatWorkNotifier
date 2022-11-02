@@ -9,7 +9,10 @@ use Kanboard\Core\Plugin\Base;
 class Plugin extends Base
 {
 
-    public function initialize(){}
+    public function initialize()
+    {
+        $this->helper->register('message', '\Kanboard\Plugin\WechatWorkNotifier\Helper\MessageHelper');
+    }
 
     public function onStartup()
     {

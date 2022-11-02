@@ -1,26 +1,27 @@
 <?php
 
-namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
+namespace Kanboard\Plugin\WechatWorkNotifier\Helper;
 
 use Kanboard\Core\Base;
 
-class BaseNotification extends Base
+class MessageHelper extends Base
 {
-    protected function sendMessage($jsonTemplate)
+    public function send($audiences, $message)
     {
         $result = false;
+        $message["touser"] = $audiences;
 
         if ($this->getToken()){
-            $result = $this->doSend($this->getToken(), $jsonTemplate);
+            $result = $this->doSend($this->getToken(), $message);
         }
 
         if (! $result){
-            $result = $this->doSend($this->getToken(true), $jsonTemplate);
+            $result = $this->doSend($this->getToken(true), $message);
         }
         return $result;
     }
 
-    protected function getAudiences($project, $eventData, $assigneeOnly = false){
+    public function getAudiences($project, $eventData, $assigneeOnly = false){
         $audiences = array();
 
         $owner = $this->userModel->getById($eventData["task"]["owner_id"]);
@@ -66,7 +67,7 @@ class BaseNotification extends Base
         return implode("|", array_unique($audiences));
     }
 
-    protected function getTaskLink($taskId, $commentId = null){
+    public function getTaskLink($taskId, $commentId = null){
         $taskLink = $this->getKanboardURL()."/task/".$taskId;
         if (!empty($commentId)){
             $taskLink .= "#comment-".$commentId;
@@ -74,7 +75,7 @@ class BaseNotification extends Base
         return $taskLink;
     }
 
-    protected function getProjectLink($projectId){
+    public function getProjectLink($projectId){
         return $this->getKanboardURL()."/board/".$projectId;
     }
 
