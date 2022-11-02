@@ -32,5 +32,5 @@ return array(
     'Creator' => '任务作者',
     'New Task' => '新任务',
     'Description' => '任务描述',
-    '@ You' => '@了你',
+    'Mentioned You' => '提到了你',
 );
