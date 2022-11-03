@@ -15,7 +15,7 @@ A notification plugin for [Kanboard](https://github.com/kanboard/kanboard), whic
 - 在评论更新后，发送通知给任务成员。 Notifying members after updating comments.
 
 其他
-- 支持Group_Assign插件。 Supporting the plugin Group_Assign.
+- 支持Group_Assign插件。 Provide support for the plugin Group_Assign.
 
 ## Getting started
 1. 确保您拥有一个企业微信中的应用的管理权限。Assure yourself of an application's management authority in Wechat Work.
