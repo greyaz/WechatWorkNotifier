@@ -4,17 +4,17 @@
 A notification plugin for [Kanboard](https://github.com/kanboard/kanboard), which helps you receive notifications on Wechat Work, aka Wecom.
 
 ## Features
-**用户通知**
+用户通知
 - 在被@后通知我。 Notifying me after being mentioned.
 
-**项目通知**
+项目通知
 - 创建任务后，发送通知给任务成员。 Notifying task members after creation.
 - 发送通知给被指派的项目成员。 Notifying someone who has been assigned.
 - 在任务移动后，发送通知给任务成员。 Notifying members after moving a task.
 - 在任务变更后，发送通知给任务成员。 Notifying members after changing a task.
 - 在评论更新后，发送通知给任务成员。 Notifying members after updating comments.
 
-**其他**
+其他
 - 支持Group_Assign插件。 Supporting the plugin Group_Assign.
 
 ## Getting started
