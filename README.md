@@ -18,7 +18,7 @@ A notification plugin for [Kanboard](https://github.com/kanboard/kanboard), whic
 - 支持Group_Assign插件。 Supporting the plugin Group_Assign.
 
 ## Getting started
-1. 确保您拥有一个企业微信中的应用的管理权限。Assuring yourself of an application's management authority in Wechat Work.
+1. 确保您拥有一个企业微信中的应用的管理权限。Assure yourself of an application's management authority in Wechat Work.
 
 2. 通过Kanboard插件管理界面安装，或者克隆本仓库至插件目录。Install from the Kanboard plugin manager directly, or clone this repository to your plugin directory.
 
