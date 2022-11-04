@@ -13,7 +13,7 @@ class UserMentionNotification extends Base implements NotificationInterface
 {
     public function notifyUser(array $user, $eventName, array $eventData){
         // fix the translations unloading bug
-        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+        Translator::load($user['language'], implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
         
         // Send to the user who has been mentioned
         if ($eventName === CommentModel::EVENT_USER_MENTION ||
