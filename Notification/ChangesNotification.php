@@ -13,13 +13,17 @@ class ChangesNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
+        // fix the translations unloading bug
+        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
+        
         // Send task changes to task members
         if ($eventName === TaskModel::EVENT_UPDATE)
         {
-            $changes = array();
+            $changes = "";
             if (!empty($eventData["changes"])){
                 foreach($eventData["changes"] as $key => $value){
-                    $changes[t($key)] = gettype(strpos($key, "date_")) == "integer" ? date("Y-m-d H:i", $value): $value;
+                    $value = gettype(strpos($key, "date_")) == "integer" ? date("Y-m-d H:i", $value): $value;
+                    $change .= t($key).": ".$value." | ";
                 }
             }
 
@@ -33,9 +37,9 @@ class ChangesNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("Task Changed"), 
                     $desc           = null, 
-                    $quoteTitle     = null, 
-                    $quote          = null, 
-                    $contentList    = $changes, 
+                    $quoteTitle     = t("Changes"), 
+                    $quote          = $changes, 
+                    $contentList    = null, 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
                 )

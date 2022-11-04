@@ -13,6 +13,9 @@ class MovementNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
+        // fix the translations unloading bug
+        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
+        
         // Send task movemens to task members
         if ($eventName === TaskModel::EVENT_MOVE_PROJECT ||
             $eventName === TaskModel::EVENT_MOVE_COLUMN ||

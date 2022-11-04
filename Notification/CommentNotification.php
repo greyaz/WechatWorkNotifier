@@ -13,6 +13,9 @@ class CommentNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
+        // fix the translations unloading bug
+        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
+        
         // Send task changes to task members
         if ($eventName === CommentModel::EVENT_UPDATE ||                                                                           
             $eventName === CommentModel::EVENT_CREATE

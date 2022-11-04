@@ -13,6 +13,9 @@ class CreationNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
+        // fix the translations unloading bug
+        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
+        
         // Send to task members after creation.
         if ($eventName === TaskModel::EVENT_CREATE
         ){
@@ -28,8 +31,11 @@ class CreationNotification extends Base implements NotificationInterface
                     $desc           = null, 
                     $quoteTitle     = t("Description"), 
                     $quote          = $eventData["task"]["description"], 
-                    $contentList    = array(
-                        t("Creator") => $eventData["task"]["creator_username"]
+                    $contentList    = array
+                    (
+                        t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
+                        t("Due time")   => date("Y-m-d H:i", $eventData["task"]["date_due"]),
+                        t("Creator")    => $eventData["task"]["creator_username"]
                     ), 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
