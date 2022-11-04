@@ -21,6 +21,9 @@ class WechatWorkNotification extends Base implements NotificationInterface
         ){
             
         }
+        elseif (){
+            
+        }
     }
 
     public function notifyProject(array $project, $eventName, array $eventData){}
@@ -58,7 +61,8 @@ class WechatWorkNotification extends Base implements NotificationInterface
                 $desc           = t("Progress updated"), 
                 $quoteTitle     = null, 
                 $quote          = null, 
-                $contentList    = array(
+                $contentList    = array
+                (
                     t("Assignee") => $eventData["task"]["assignee_username"]
                 ), 
                 $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
@@ -80,8 +84,11 @@ class WechatWorkNotification extends Base implements NotificationInterface
                 $desc           = null, 
                 $quoteTitle     = t("Description"), 
                 $quote          = $eventData["task"]["description"], 
-                $contentList    = array(
-                    t("Creator") => $eventData["task"]["creator_username"]
+                $contentList    = array
+                (
+                    t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
+                    t("Due time")   => date("Y-m-d H:i", $eventData["task"]["date_due"]),
+                    t("Creator")    => $eventData["task"]["creator_username"]
                 ), 
                 $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                 $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
@@ -149,11 +156,13 @@ class WechatWorkNotification extends Base implements NotificationInterface
                 $subTitle       = null, 
                 $key            = "P".$eventData["task"]["priority"], 
                 $desc           = $eventData["task"]["title"], 
-                $quoteTitle     = null, 
-                $quote          = null, 
-                $contentList    = array(
+                $quoteTitle     = t("Description"), 
+                $quote          = $eventData["task"]["description"], 
+                $contentList    = array
+                (
                     t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
-                    t("Due time") => date("Y-m-d H:i", $eventData["task"]["date_due"])
+                    t("Due time")   => date("Y-m-d H:i", $eventData["task"]["date_due"]),
+                    t("Creator")    => $eventData["task"]["creator_username"]
                 ), 
                 $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                 $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
