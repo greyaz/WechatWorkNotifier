@@ -6,17 +6,23 @@ use Kanboard\Core\Base;
 
 class MessageHelper extends Base
 {
+    private $lastSentTime;
+
     public function send($audiences, $message)
     {
         $result = false;
-        $message["touser"] = $audiences;
 
-        if ($this->getToken()){
-            $result = $this->doSend($this->getToken(), $message);
-        }
+        if (!isset($this->lastSentTime) || time() - $this->lastSentTime >= $GLOBALS["WWN_CONFIGS"]["SEND_INTERVAL"])
+        {
+            $message["touser"] = $audiences;
 
-        if (! $result){
-            $result = $this->doSend($this->getToken(true), $message);
+            if ($this->getToken()){
+                $result = $this->doSend($this->getToken(), $message);
+            }
+
+            if (! $result){
+                $result = $this->doSend($this->getToken(true), $message);
+            }
         }
         return $result;
     }
@@ -98,6 +104,7 @@ class MessageHelper extends Base
                 );
                 $result = json_decode($result);
                 if ($result->errcode == 0){
+                    $this->lastSentTime = time();
                     return true;
                 }
                 $this->logger->debug(serialize($result));

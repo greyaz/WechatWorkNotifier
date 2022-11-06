@@ -52,10 +52,7 @@ class MessageModel
 
         $message["template_card"]["card_action"]["type"]                    = "1";
         $message["template_card"]["card_action"]["url"]                     = $taskLink;
-
-        $message["enable_duplicate_check"]                                  = "1";
-        $message["duplicate_check_interval"]                                = "5";
-
+        
         return $message;
     }
 }
