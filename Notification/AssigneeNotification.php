@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
+use Kanboard\Core\Translator;
 use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
@@ -13,12 +14,12 @@ class AssigneeNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
-        // fix the translations unloading bug
-        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
-        
         // Send a notification to someone who has been assigned
         if ($eventName === TaskModel::EVENT_ASSIGNEE_CHANGE)
         {
+            // fix the translations unloading bug
+            Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+
             $this->helper->message->send
             (
                 $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = true),

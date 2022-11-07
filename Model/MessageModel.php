@@ -52,7 +52,7 @@ class MessageModel
 
         $message["template_card"]["card_action"]["type"]                    = "1";
         $message["template_card"]["card_action"]["url"]                     = $taskLink;
-        
+
         return $message;
     }
 }

@@ -12,13 +12,13 @@ use Kanboard\Model\TaskModel;
 class UserMentionNotification extends Base implements NotificationInterface
 {
     public function notifyUser(array $user, $eventName, array $eventData){
-        // fix the translations unloading bug
-        Translator::load($user['language'], implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
-        
         // Send to the user who has been mentioned
         if ($eventName === CommentModel::EVENT_USER_MENTION ||
             $eventName === TaskModel::EVENT_USER_MENTION
         ){
+            // fix the translations unloading bug
+            Translator::load($user['language'], implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+
             $this->helper->message->send
             (
                 $audiences  = $eventData["mention"]["email"],

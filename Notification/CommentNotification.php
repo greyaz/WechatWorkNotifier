@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
+use Kanboard\Core\Translator;
 use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\CommentModel;
@@ -13,13 +14,13 @@ class CommentNotification extends Base implements NotificationInterface
 
     public function notifyProject(array $project, $eventName, array $eventData)
     {
-        // fix the translations unloading bug
-        Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, 'Locale')));
-        
         // Send task changes to task members
         if ($eventName === CommentModel::EVENT_UPDATE ||                                                                           
             $eventName === CommentModel::EVENT_CREATE
         ){
+            // fix the translations unloading bug
+            Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+
             $this->helper->message->send
             (
                 $audiences  = $this->helper->message->getAudiences($project, $eventData, $assigneeOnly = false),

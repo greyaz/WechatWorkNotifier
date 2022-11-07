@@ -33,4 +33,5 @@ return array(
     'New Task' => '新任务',
     'Description' => '任务描述',
     'Mentioned You' => '提到了你',
+    'Changes: ' => '变更内容：',
 );
