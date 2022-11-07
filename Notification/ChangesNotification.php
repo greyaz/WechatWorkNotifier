@@ -3,6 +3,7 @@
 namespace Kanboard\Plugin\WechatWorkNotifier\Notification;
 
 use Kanboard\Core\Base;
+use Kanboard\Core\Translator;
 use Kanboard\Plugin\WechatWorkNotifier\Model\MessageModel;
 use Kanboard\Core\Notification\NotificationInterface;
 use Kanboard\Model\TaskModel;
@@ -16,11 +17,16 @@ class ChangesNotification extends Base implements NotificationInterface
         // Send task changes to task members
         if ($eventName === TaskModel::EVENT_UPDATE)
         {
-            $changes = array();
+            // fix the translations unloading bug
+            Translator::load($this->languageModel->getCurrentLanguage(), implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+
+            $changes = "";
             if (!empty($eventData["changes"])){
                 foreach($eventData["changes"] as $key => $value){
-                    $changes[t($key)] = gettype(strpos($key, "date_")) == "integer" ? date("Y-m-d H:i", $value): $value;
+                    $value = gettype(strpos($key, "date_")) == "integer" ? date("Y-m-d H:i", $value): $value;
+                    $changes .= t($key)."⇢".$value." | ";
                 }
+                $changes = substr($changes, 0, -2);
             }
 
             $this->helper->message->send
@@ -33,9 +39,9 @@ class ChangesNotification extends Base implements NotificationInterface
                     $subTitle       = $eventData["task"]["title"], 
                     $key            = t("Task Changed"), 
                     $desc           = null, 
-                    $quoteTitle     = null, 
-                    $quote          = null, 
-                    $contentList    = $changes, 
+                    $quoteTitle     = t("Changes: "), 
+                    $quote          = $changes, 
+                    $contentList    = null, 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
                     $projectLink    = $this->helper->message->getProjectLink($eventData["task"]["project_id"])
                 )
