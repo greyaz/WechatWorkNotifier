@@ -17,7 +17,11 @@ class UserMentionNotification extends Base implements NotificationInterface
             $eventName === TaskModel::EVENT_USER_MENTION
         ){
             // fix the translations unloading bug
-            Translator::load($user['language'], implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
+            $language = $this->languageModel->getCurrentLanguage();
+            if (!empty($user['language'])){
+                $language = $user['language'];
+            }
+            Translator::load($language, implode(DIRECTORY_SEPARATOR, array(__DIR__, '..', 'Locale')));
 
             $this->helper->message->send
             (
