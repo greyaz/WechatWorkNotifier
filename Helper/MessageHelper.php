@@ -8,7 +8,14 @@ class MessageHelper extends Base
 {
     private $lastRoundAudiences = array();
     private $lastRoundTime = 0;
-    private $notificationInterval = empty($GLOBALS["WWN_CONFIGS"]["NOTIFICATION_INTERVAL"]) ? 1 : $GLOBALS["WWN_CONFIGS"]["NOTIFICATION_INTERVAL"];
+    private $notificationInterval = 1;
+
+    public function __construct() {
+        parent::__construct();
+        if(!empty($GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'])){
+            $this->notificationInterval = $GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'];
+        }
+    }
 
     public function send($audiences, $message)
     {
