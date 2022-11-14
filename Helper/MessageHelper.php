@@ -10,8 +10,8 @@ class MessageHelper extends Base
     private $lastRoundTime = 0;
     private $notificationInterval = 1;
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($c) {
+        parent::__construct($c);
         if(!empty($GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'])){
             $this->notificationInterval = $GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'];
         }
