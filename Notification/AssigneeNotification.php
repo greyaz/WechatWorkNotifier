@@ -27,15 +27,15 @@ class AssigneeNotification extends Base implements NotificationInterface
                 (
                     $taskId         = $eventData["task"]["id"], 
                     $title          = t("You have a new task"), 
-                    $subTitle       = null, 
+                    $subTitle       = $eventData["task"]["project_name"], 
                     $key            = "P".$eventData["task"]["priority"], 
                     $desc           = $eventData["task"]["title"], 
                     $quoteTitle     = t("Description"), 
                     $quote          = $eventData["task"]["description"], 
                     $contentList    = array
                     (
-                        t("Start time") => date("Y-m-d H:i", $eventData["task"]["date_started"]),
-                        t("Due time")   => date("Y-m-d H:i", $eventData["task"]["date_due"]),
+                        t("Start time") => empty($eventData["task"]["date_started"]) ? "-" : date("Y-m-d H:i", $eventData["task"]["date_started"]),
+                        t("Due time")   => empty($eventData["task"]["date_due"]) ? "-" : date("Y-m-d H:i", $eventData["task"]["date_due"]),
                         t("Creator")    => $eventData["task"]["creator_username"]
                     ), 
                     $taskLink       = $this->helper->message->getTaskLink($eventData["task"]["id"]), 
