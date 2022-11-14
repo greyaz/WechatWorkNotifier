@@ -16,6 +16,7 @@
 
 其他
 - 支持Group_Assign插件。 Provide support for the plugin Group_Assign.
+- 用户层级的通知接收频率控制。 Provide user-level control of notifications' receiving frequency.
 
 ## Getting started
 1. 确保您拥有一个企业微信中的应用的管理权限。Assure yourself of an application's management authority on Wechat Work.
