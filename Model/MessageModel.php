@@ -29,7 +29,7 @@ class MessageModel
 
         if (isset($quoteTitle))
         {
-            $message["template_card"]["quote_area"]["title"]           = $quoteTitle;
+            $message["template_card"]["quote_area"]["title"]                = $quoteTitle;
         }
 
         if (isset($quote))

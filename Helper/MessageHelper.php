@@ -6,17 +6,27 @@ use Kanboard\Core\Base;
 
 class MessageHelper extends Base
 {
+    private $lastRoundAudiences = array();
+    private $lastRoundTime = 0;
+    private $notificationInterval = 1;
+
+    public function __construct($c) {
+        parent::__construct($c);
+        if(!empty($GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'])){
+            $this->notificationInterval = $GLOBALS['WWN_CONFIGS']['NOTIFICATION_INTERVAL'];
+        }
+    }
+
     public function send($audiences, $message)
     {
         $result = false;
-        $message["touser"] = $audiences;
 
         if ($this->getToken()){
-            $result = $this->doSend($this->getToken(), $message);
+            $result = $this->doSend($this->getToken(), $audiences, $message);
         }
 
         if (! $result){
-            $result = $this->doSend($this->getToken(true), $message);
+            $result = $this->doSend($this->getToken(true), $audiences, $message);
         }
         return $result;
     }
@@ -64,7 +74,7 @@ class MessageHelper extends Base
             }
         }
 
-        return implode("|", array_unique($audiences));
+        return array_unique($audiences);
     }
 
     public function getTaskLink($taskId, $commentId = null){
@@ -87,9 +97,13 @@ class MessageHelper extends Base
         return $url;
     }
 
-    private function doSend($token, $jsonTemplate){
+    private function doSend($token, $audiences, $jsonTemplate){
         if ($token){
+            $prevAudiences = $this->lastRoundAudiences;
+            // try
             try{
+                $jsonTemplate["touser"] = implode("|", $this->getFilteredAudiencesAndSetLast($audiences));
+                // send
                 $result = $this->httpClient->doRequest(
                     'POST',
                     "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=".$token,
@@ -97,16 +111,36 @@ class MessageHelper extends Base
                     ['Content-type: application/json']
                 );
                 $result = json_decode($result);
+                // result
                 if ($result->errcode == 0){
                     return true;
                 }
-                $this->logger->debug(serialize($result));
+                else{
+                    $this->lastRoundAudiences = $prevAudiences;
+                    $this->logger->debug(serialize($result));
+                }
             }
+            // catch error
             catch(Exception $error){
+                $this->lastRoundAudiences = $prevAudiences;
                 $this->logger->debug(serialize($error));
             }
         }
         return false;
+    }
+
+    private function getFilteredAudiencesAndSetLast($audiences){
+        $time = time();
+        if ($time - $this->lastRoundTime > $this->notificationInterval){
+            $this->lastRoundTime = $time;
+            $this->lastRoundAudiences = $audiences;
+            return $audiences;
+        }
+        else{
+            $newAudiences = array_diff($audiences, array_intersect($this->lastRoundAudiences, $audiences));
+            $this->lastRoundAudiences = array_merge($this->lastRoundAudiences, $newAudiences);
+            return $newAudiences;
+        }
     }
 
     private function getToken($force = false){
