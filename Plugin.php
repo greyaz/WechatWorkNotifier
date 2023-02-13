@@ -32,6 +32,10 @@ class Plugin extends Base
         }
     }
 
+    public function getPluginName()	{ 	 
+		return 'Wechat Work Notifier'; 
+	}
+
     public function getPluginDescription()
     {
         return 'Receive notifications on Wechat Work (企业微信), aka Wecom.';
@@ -44,7 +48,7 @@ class Plugin extends Base
 
     public function getPluginVersion()
     {
-        return '0.4.0';
+        return '0.4.1';
     }
 
     public function getPluginHomepage()
