@@ -53,7 +53,7 @@ class MessageHelper extends Base
                 $audiences[] = $creator['email'];
             }
 
-            $multimembers = $this->multiselectMemberModel->getMembers($eventData["task"]['owner_ms']);
+            $multimembers = isset($this->multiselectMemberModel) ? $this->multiselectMemberModel->getMembers($eventData["task"]['owner_ms']) : null;
             if (!empty($multimembers)){
                 foreach ($multimembers as $member) {
                     $user = $this->userModel->getById($member['id']);
@@ -63,7 +63,7 @@ class MessageHelper extends Base
                 }
             }
             
-            $groupmembers = $this->groupMemberModel->getMembers($eventData["task"]['owner_gp']);
+            $groupmembers = isset($this->groupMemberModel) ? $this->groupMemberModel->getMembers($eventData["task"]['owner_gp']) : null;
             if (!empty($groupmembers)){
                 foreach ($groupmembers as $member) {
                     $user = $this->userModel->getById($member['id']);
